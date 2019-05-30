@@ -11,7 +11,7 @@ class Login(object):
         self.qq, self.password = self.getUsernamePassword() 
 
     def getUsernamePassword(self):
-        infopath = '/home/yanglin/桌面/spider/userinfo.json'
+        infopath = 'userinfo.json'
         try:    
             with open(infopath, 'r', encoding = 'utf-8') as r:
                 userinfo = json.load(r)
@@ -40,14 +40,13 @@ class Login(object):
         driver.switch_to_default_content()   #跳出当前的frame
 
         driver.implicitly_wait(10)
-        time.sleep(10)
+        time.sleep(3)
         with open(r'cookie_file', 'w+') as f:#这里是将得到的cookie进行保存，这样就不用每次启动程序都要登录
             for cookie in driver.get_cookies():
                 print(cookie)
                 f.write(cookie['name']+'='+cookie['value']+';')
         f.close()
-        driver.quit()
         driver.close()
 
-mylogin = Login()
-mylogin.login()
+#mylogin = Login()
+#mylogin.login()
