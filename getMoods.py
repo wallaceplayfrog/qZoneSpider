@@ -35,7 +35,7 @@ class Moods(object):
 
         while key:
             print("\tDealing with position:\t%d" % pos)
-            url = url_base + "&pos=%d" % pos
+            url = urlBase + "&pos=%d" % pos
             # print(url) 用于调试
             res = self.session.get(url, headers = self.headers)
             con = res.text

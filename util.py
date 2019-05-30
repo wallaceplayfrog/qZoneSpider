@@ -36,12 +36,12 @@ def getGtk():
     pskeyStart = cookie.find('p_skey=')
     pskeyEnd = cookie.find(';', pskeyStart)
 
-    # 有时 p_skey 会出现在 cookie 的最后，此时 pskey_end 会返回-1
+    # 有时 p_skey 会出现在 cookie 的最后，此时 pskeyEnd 会返回-1
     # 应该直接取到结束
     if pskeyEnd == -1:
-        p_skey = cookie[pskey_start+7:]
+        p_skey = cookie[pskeyStart+7:]
     else:
-        p_skey = cookie[pskey_start+7: pskey_end]
+        p_skey = cookie[pskeyStart+7: pskeyEnd]
 
     h = 5381
 

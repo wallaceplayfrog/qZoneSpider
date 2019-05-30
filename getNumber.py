@@ -15,7 +15,7 @@ class exactData(object):
     def exactNumber(self):
         '''从json中获取qqnumber'''
         friendsFiles = [x for x in os.listdir('friends') if x.endswith("json")]
-
+        #print(len(friendsFiles))
         qqnumberItem = []
         i = 0
         for eachFile in friendsFiles:
@@ -31,4 +31,6 @@ class exactData(object):
                     qqnumberItem.append(item)
         else:
             with open('qqnumber.inc', 'w', encoding='utf-8') as qqFile:
+                print('Friends number:\t', len(qqnumberItem))
                 qqFile.write(str(qqnumberItem))
+        print('Finish!')
