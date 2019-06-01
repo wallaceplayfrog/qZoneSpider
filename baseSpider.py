@@ -1,4 +1,4 @@
-'''dropped
+'''已弃用
 '''
 
 from selenium import webdriver
