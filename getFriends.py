@@ -1,24 +1,16 @@
-"""
-获取自己的QQ好友列表
-"""
-
-
 import requests
 from time import sleep
 import util
 
-
 class GetFriendsNumber(object):
-    '''从qq空间访问列表来获取好友信息'''
+    #从qq空间访问列表来获取好友信息
     def __init__(self):
-
         self.headers = util.headers
         self.baseUrl = util.parseFriendsUrl()
         util.checkPath('friends')
         print('开始获取好友列表，并把文件保存到 friends 文件夹')
 
     def getFriends(self):
-
         key = True
         position = 0
         while key:

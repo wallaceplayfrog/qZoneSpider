@@ -1,19 +1,13 @@
-'''
-用到的工具函数、变量集合
-'''
-
 import os
 import re
 from urllib import parse
 import requests
-
 
 def getCookie():
     '''从已保存cookie_file读取cookie'''
     with open('cookie_file') as f:
         cookie = f.read()
     cookie = cookie.replace('\n', '')
-
     return cookie
 
 cookie = getCookie()
@@ -31,7 +25,7 @@ headers = {
 }
 
 def getGtk():
-    '''获取g_tk加密参数'''
+    #获取g_tk加密参数
 
     pskeyStart = cookie.find('p_skey=')
     pskeyEnd = cookie.find(';', pskeyStart)
@@ -42,19 +36,15 @@ def getGtk():
         p_skey = cookie[pskeyStart+7:]
     else:
         p_skey = cookie[pskeyStart+7: pskeyEnd]
-
     h = 5381
-
     for s in p_skey:
         h += (h << 5) + ord(s)
-
     return h & 2147483647
 
 g_tk = getGtk()
 
-
 def getQzonetoken(qqnum):
-    '''获取qzonetoken，它位于空间首页的源代码中'''
+    #获取qzonetoken，它位于空间首页的源代码中
     indexUrl = "https://user.qzone.qq.com/%s" % qqnum
     headers['referer'] = 'https://qzs.qq.com/qzone/v5/loginsucc.html?para=izone'
     headers['upgrade-insecure-requests'] = '1'
@@ -63,10 +53,8 @@ def getQzonetoken(qqnum):
     searchRes = re.search(r'g_qzonetoken.*return\s*"(.*)";}', src, re.S)
     return searchRes.group(1) if searchRes else ''
 
-
 def parseMoodsUrl(qqnum):
-    '''获取每个好友的动态链接，需要提供他们的qqnumber来获取url
-    '''
+    #获取每个好友的动态链接，需要提供他们的qqnumber来获取url
 
     params = {"cgi_host": "http://taotao.qq.com/cgi-bin/emotion_cgi_msglist_v6",
               "code_version": 1,
@@ -86,8 +74,7 @@ def parseMoodsUrl(qqnum):
     return url
 
 def parseFriendsUrl():
-    '''用cookie生成url，不需要提供qqnumber
-    '''
+    #用cookie生成url，不需要提供qqnumber
 
     cookie = headers['cookie']
     qqStart = cookie.find('uin=o')
@@ -109,9 +96,7 @@ def parseFriendsUrl():
     return url
 
 def checkPath(path):
-    '''检查路径是否存在
-       否，则创建
-    '''
+    #检查路径是否存在,否，则创建
 
     if not os.path.exists(path):
         os.mkdir(path)

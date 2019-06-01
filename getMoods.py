@@ -1,8 +1,3 @@
-"""
-把包含动态的文件下载下来
-"""
-
-
 import requests
 import os
 import sys
@@ -11,7 +6,7 @@ import util
 
 
 class Moods(object):
-    '''用cookies获取动态文件'''
+    #用cookies获取动态文件
 
     def __init__(self):
         self.session = requests.Session()
@@ -19,7 +14,7 @@ class Moods(object):
         self.g_tk = util.g_tk
 
     def getMoods(self, qqnumber):
-        '''下载动态文件并保存到/mood_result/qqnumber文件夹下'''
+        #下载动态文件并保存到/mood_result/qqnumber文件夹下
 
         referer = 'http://user.qzone.qq.com/' + qqnumber
         self.headers['Referer'] = referer
@@ -45,16 +40,16 @@ class Moods(object):
             if '''"msglist":null''' in con:
                 key = False
 
-            # 禁止访问时
+            # 禁止访问
             if '''"msgnum":0''' in con:
                 with open('naida_log.log', 'a', encoding="utf-8") as logFile:
-                    logFile.write("%s Cannot access..\n" % qqnumber)
+                    logFile.write("%s 的空间禁止访问..\n" % qqnumber)
                 key = False
 
             # Cookie 过期
             if '''"subcode":-4001''' in con:
                 with open('naida_log.log', 'a', encoding="utf-8") as log_file:
-                    log_file.write('Cookie Expried! Time is %s\n' % time.ctime())
+                    log_file.write('Cookie过期! Time is %s\n' % time.ctime())
                 sys.exit()
 
             pos += 20
@@ -63,7 +58,7 @@ class Moods(object):
 class moodsStart(object):
 
     def __init__(self):
-        print('Start to get all friend\'s mood file and save it to the mood_result folder')
+        print('开始获取所有好友动态并存储到 mood_result 文件夹')
 
     def getMoodsStart(self):
         app = Moods()
@@ -89,10 +84,11 @@ class moodsStart(object):
             try:
                 app.getMoods(qq)
             except KeyboardInterrupt:
+                # 强制退出
                 print('User Interrupt, program will exit')
                 sys.exit()
             except Exception as e:
-                # Write the rest item back to qqnumber.inc
+                # 将剩余item回写至qqnumber.inc
                 with open('qqnumber.inc', 'w', encoding="utf-8") as qnumberFile:
                     qnumberFile.write(str(saveBackqNumber))
 

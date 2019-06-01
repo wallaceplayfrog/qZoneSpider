@@ -1,19 +1,15 @@
-"""
-从上一步获取到的QQ列表文件夹中，提取出QQ号，并保存到qqnumber.inc文件中
-"""
-
 import json
 import os
 
 
 class exactData(object):
-    '''定义从结果中获取我的QQ好友数据的方法，从结果中获取我的动态数据'''
+    #定义从结果中获取我的QQ好友数据的方法，从结果中获取我的动态数据
 
     def __init__(self):
-        print("Start to exact the qq number item from getFriends result")
+        print("开始从getFriends的结果提取qqnumber")
 
     def exactNumber(self):
-        '''从json中获取qqnumber'''
+        #从json中获取qqnumber
         friendsFiles = [x for x in os.listdir('friends') if x.endswith("json")]
         #print(len(friendsFiles))
         qqnumberItem = []
@@ -31,6 +27,6 @@ class exactData(object):
                     qqnumberItem.append(item)
         else:
             with open('qqnumber.inc', 'w', encoding='utf-8') as qqFile:
-                print('Friends number:\t', len(qqnumberItem))
+                print('好友数量:\t', len(qqnumberItem))
                 qqFile.write(str(qqnumberItem))
         print('Finish!')

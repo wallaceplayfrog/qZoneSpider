@@ -3,7 +3,6 @@ import json
 import sqlite3
 import html
 
-
 class GetDetail(object):
     #清洗动态数据并存储到数据库
 
@@ -65,7 +64,7 @@ class GetDetail(object):
                     # 当一个动态只有视频
                     moodItem['content'] = mood['video'][0]['url3']
 
-            print('Dealing with QQ: %s, total moods count: %d' % (qqnumber, self.count))
+            print('正在提取 QQ: %s, 目前总计动态数量为: %d' % (qqnumber, self.count))
             self.insertToDB(moodItem)
             self.count += 1
             if self.count % 1000 == 0:
@@ -76,9 +75,7 @@ class GetDetail(object):
         sql = 'INSERT INTO moods (qq, ctime,  content, comment_count, phone, image, locate) VALUES (?, ?, ?, ?, ?, ?, ?)'
         self.cur.execute(sql, (mood['belong'], mood['create_time'], mood['content'], mood['comment_num'], mood['phone'], mood['pic'], mood['locate']))
 
-
 if __name__ == '__main__':
-
     conn = sqlite3.connect('moods.sqlite')
     cur = conn.cursor()
 

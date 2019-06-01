@@ -1,12 +1,9 @@
-'''获取cookie
-   userinfo
-'''
-
 from selenium import webdriver
 import json
 import time
 
 class Login(object):
+    # 根据userinfo的内容登录并获取cookie
     def __init__(self):
         self.qq, self.password = self.getUsernamePassword() 
 
