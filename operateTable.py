@@ -1,7 +1,6 @@
 import sqlite3
 import sys
 
-
 class OperateTable(object):
 
     def __init__(self):
