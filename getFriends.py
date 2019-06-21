@@ -8,7 +8,7 @@ class GetFriendsNumber(object):
         self.headers = util.headers
         self.baseUrl = util.parseFriendsUrl()
         util.checkPath('friends')
-        print('开始获取好友列表，并把文件保存到 friends 文件夹')
+        print('获取好友列表，并把文件保存到 friends ')
 
     def getFriends(self):
         key = True
@@ -32,7 +32,7 @@ class GetFriendsNumber(object):
                 key = False
                 break
             if '''"uinlist":[]''' in con:
-                print("好友列表获取完毕!")
+                print("Finish!")
                 break
                 key = False
 

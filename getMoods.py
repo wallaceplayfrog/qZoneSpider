@@ -3,6 +3,7 @@ import os
 import sys
 import time
 import util
+import threading
 
 
 class Moods(object):
@@ -43,13 +44,13 @@ class Moods(object):
             # 禁止访问
             if '''"msgnum":0''' in con:
                 with open('naida_log.log', 'a', encoding="utf-8") as logFile:
-                    logFile.write("%s 的空间禁止访问..\n" % qqnumber)
+                    logFile.write("%s No access..\n" % qqnumber)
                 key = False
 
             # Cookie 过期
             if '''"subcode":-4001''' in con:
                 with open('naida_log.log', 'a', encoding="utf-8") as log_file:
-                    log_file.write('Cookie过期! Time is %s\n' % time.ctime())
+                    log_file.write('Cookie expired! Time is %s\n' % time.ctime())
                 sys.exit()
 
             pos += 20
@@ -58,7 +59,7 @@ class Moods(object):
 class moodsStart(object):
 
     def __init__(self):
-        print('开始获取所有好友动态并存储到 mood_result 文件夹')
+        print('Start capturing all friend moods and store them in mood_result folder')
 
     def getMoodsStart(self):
         app = Moods()
@@ -74,29 +75,40 @@ class moodsStart(object):
         while qnumberList != []:
             saveBackqNumber = qnumberList[:]
             item = qnumberList.pop()
-            qq = item['data']
-            print("Dealing with:\t%s" % qq)
 
-            startTime = time.ctime()
-            with open('naida_log.log', 'a', encoding="utf-8") as log_file:
-                log_file.write("Program run at: %s\tGetting %s data...\n" % (startTime, qq))
-
-            try:
-                app.getMoods(qq)
-            except KeyboardInterrupt:
-                # 强制退出
-                print('User Interrupt, program will exit')
-                sys.exit()
-            except Exception as e:
-                # 将剩余item回写至qqnumber.inc
-                with open('qqnumber.inc', 'w', encoding="utf-8") as qnumberFile:
-                    qnumberFile.write(str(saveBackqNumber))
-
-                # 记录日志
-                with open('naida_log.log', 'a', encoding="utf-8") as logFile:
-                    exceptionTime = time.ctime()
-                    logFile.write("Exception occured: %s\n%s\n" % (exceptionTime, e))
-            else:
-                print("%s Finish!" % qq)
+            while threading.activeCount() - 1 > 4: #同时最多有5个线程
+                time.sleep(5)
+            
+            t = threading.Thread(target=self.getMooding, args=(item, app))
+            t.start()
+            
         else:
-            print("Finish All!")
+            if threading.activeCount() - 1 == 0: 
+                print("Finish All!")
+    
+    def getMooding(self, item, app):
+        #app = Moods
+        qq = item['data']
+        print("Dealing with:\t%s" % qq)
+
+        startTime = time.ctime()
+        with open('naida_log.log', 'a', encoding="utf-8") as log_file:
+            log_file.write("Program run at: %s\tGetting %s data...\n" % (startTime, qq))
+
+        try:
+            app.getMoods(qq)
+        except KeyboardInterrupt:
+            # 强制退出
+            print('User Interrupt, program will exit')
+            sys.exit()
+        except Exception as e:
+            # 将数据回写至qqnumber.inc
+            with open('qqnumber.inc', 'w', encoding="utf-8") as qnumberFile:
+                qnumberFile.write(str(saveBackqNumber))
+
+            # 记录日志
+            with open('naida_log.log', 'a', encoding="utf-8") as logFile:
+                exceptionTime = time.ctime()
+                logFile.write("Exception occured: %s\n%s\n" % (exceptionTime, e))
+        else:
+            print("%s Finish!" % qq)

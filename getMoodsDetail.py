@@ -64,7 +64,7 @@ class GetDetail(object):
                     # 当一个动态只有视频
                     moodItem['content'] = mood['video'][0]['url3']
 
-            print('正在提取 QQ: %s, 目前总计动态数量为: %d' % (qqnumber, self.count))
+            print('Dealing with QQ: %s, moods number is: %d' % (qqnumber, self.count))
             self.insertToDB(moodItem)
             self.count += 1
             if self.count % 1000 == 0:
