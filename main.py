@@ -1,6 +1,6 @@
-import getFriends
-import getMoods
-import getNumber
+import Friends
+import Moods
+import Number
 import login
 
 if __name__ == '__main__':
@@ -8,16 +8,15 @@ if __name__ == '__main__':
     #mylogin = login.Login()
     #mylogin.login()
 
-    # 先获取包含好友QQ号码的文件
-    #friends = getFriends.GetFriendsNumber()
+    # 获取包含好友QQ号码的文件
+    #friends = Friends.GetFriendsNumber()
     #friends.getFriends()
 
-    # 第二步清洗数据
-    # 从这些文件里面提取出QQ号码
-    # 保存到文件 qqnumber.inc
-    #qqFile = getNumber.exactData()
+    # 清洗数据
+    # 提取QQ号码
+    #qqFile = Number.exactData()
     #qqFile.exactNumber()
 
-    # 最后，根据每一个QQ号码去获取对应的动态
-    moods = getMoods.moodsStart()
+    # 获取动态
+    moods = Moods.moodsStart()
     moods.getMoodsStart()
