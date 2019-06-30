@@ -6,7 +6,7 @@ class exactData(object):
     #定义从结果中获取我的QQ好友数据的方法，从结果中获取我的动态数据
 
     def __init__(self):
-        print("开始从getFriends的结果提取qqnumber")
+        print("Start get qqnumber")
 
     def exactNumber(self):
         #从json中获取qqnumber
@@ -27,6 +27,6 @@ class exactData(object):
                     qqnumberItem.append(item)
         else:
             with open('qqnumber.inc', 'w', encoding='utf-8') as qqFile:
-                print('好友数量:\t', len(qqnumberItem))
+                print('friends count:\t', len(qqnumberItem))
                 qqFile.write(str(qqnumberItem))
         print('Finish!')

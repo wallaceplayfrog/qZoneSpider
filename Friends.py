@@ -8,7 +8,7 @@ class GetFriendsNumber(object):
         self.headers = util.headers
         self.baseUrl = util.parseFriendsUrl()
         util.checkPath('friends')
-        print('获取好友列表，并把文件保存到 friends ')
+        print('Start get friends file')
 
     def getFriends(self):
         key = True

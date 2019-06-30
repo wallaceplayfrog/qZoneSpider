@@ -16,6 +16,7 @@ class Moods(object):
         self.access = self.getAccess()
 
     def getAccess(self):
+        util.checkPath('Access.json')
         with open('Access.json', 'r', encoding='utf-8') as f:
             fstring = f.read()
         fjson = eval(fstring)
